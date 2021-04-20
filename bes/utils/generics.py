@@ -1,5 +1,5 @@
 from functools import cached_property
-from typing import TypeVar, Generic, List, Iterable, Optional, Type, Any
+from typing import TypeVar, Generic, List, Iterable, Optional, Any
 
 from pydantic.generics import GenericModel
 
@@ -30,7 +30,7 @@ class ListGenericModel(GenericModel, Generic[TList]):
     def __getitem__(self, item) -> TList:
         return self.__root__[item]
 
-    def __add__(self, other: Type["ListGenericModel"]):
+    def __add__(self, other):
         __root__ = self.__root__ + other.__root__
         return self.__class__(__root__=__root__)
 
@@ -84,6 +84,3 @@ class ObjectGenericModel(GenericModel, Generic[TObject]):
     def __init__(self, __root__: TObject = None, **data):
         super().__init__(__root__=__root__, **data)
 
-    class Config:
-        arbitrary_types_allowed = True
-        keep_untouched = (cached_property,)

@@ -1,5 +1,5 @@
 from functools import cached_property
-from typing import List, Union, Optional
+from typing import List, Union
 
 from pydantic import BaseModel, Field
 
@@ -9,8 +9,8 @@ from ...utils.generics import ListGenericModel
 
 
 class Lookups(BaseModel):
-    include: Optional[List[Union[int, str]]]
-    exclude: Optional[List[Union[int, str]]]
+    include: List[Union[int, str]] = []
+    exclude: List[Union[int, str]] = []
 
     @classmethod
     def default(cls):
