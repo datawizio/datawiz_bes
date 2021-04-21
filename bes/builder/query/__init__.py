@@ -2,7 +2,7 @@ from typing import Union
 
 from pydantic import BaseModel, Field
 
-from .dimension import Dimension, DimensionGroupBy, GroupBy, Filters
+from .dimension import Dimension, DimensionGroupBy, GroupBy, Filters, Lookups
 from .interval import DateRange, PrevDateRange
 from .metric import Metric, Aggregate
 from .options import (
@@ -16,6 +16,7 @@ from .options import (
 __all__ = (
     "Dimension",
     "DimensionGroupBy",
+    "Lookups",
     "GroupBy",
     "Filters",
     "DateRange",

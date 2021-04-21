@@ -28,7 +28,7 @@ class RenderOptions(BaseModel):
 class TableRenderOptions(RenderOptions):
     dtype: RenderType = RenderType.table
     additional_data: Optional[dict]
-    additional_column_option: Optional[dict]
+    additional_column_options: Optional[dict]
     replace_data: Optional[dict]
     clone_data: Optional[dict]
     key_start: Optional[str]
@@ -36,6 +36,7 @@ class TableRenderOptions(RenderOptions):
 
 class ChartRenderOptions(RenderOptions):
     dtype: RenderType = RenderType.chart
+    additional_data: Optional[dict]
     replace_data: Optional[dict]
     clone_data: Optional[dict]
     key_start: Optional[str]
