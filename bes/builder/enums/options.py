@@ -14,3 +14,10 @@ class DataFrameFormatType(str, Enum):
     index = "index"
     series = "series"
     records = "records"
+
+
+class DeltaInterval(str, Enum):
+    day = "day"
+    week = "week"
+    month = "month"
+    year = "year"

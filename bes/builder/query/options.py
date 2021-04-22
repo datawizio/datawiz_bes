@@ -2,13 +2,17 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from ..enums.options import RenderType, DataFrameFormatType
+from ..enums.options import RenderType, DataFrameFormatType, DeltaInterval
 
 
 class Options(BaseModel):
     with_col_total: bool = False
     with_row_total: bool = False
     use_cache: bool = False
+    delta_interval: DeltaInterval = DeltaInterval.day
+
+    class Config:
+        use_enum_values = True
 
 
 class RenderOptions(BaseModel):

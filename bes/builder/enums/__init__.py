@@ -1,7 +1,7 @@
 from .dimension import On
 from .interval import Selected, PrevSelected
 from .metric import Condition, DType
-from .options import RenderType, DataFrameFormatType
+from .options import RenderType, DataFrameFormatType, DeltaInterval
 
 __all__ = (
     "On",
@@ -11,4 +11,5 @@ __all__ = (
     "DType",
     "RenderType",
     "DataFrameFormatType",
+    "DeltaInterval"
 )
