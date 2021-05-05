@@ -3,7 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel, root_validator
 
-from ..enums.interval import Selected, PrevSelected
+from .enums.interval import Selected, PrevSelected
 
 
 class DateRange(BaseModel):

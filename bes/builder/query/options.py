@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from ..enums.options import RenderType, DataFrameFormatType, DeltaInterval
+from .enums.options import RenderType, DataFrameFormatType, DeltaInterval
 
 
 class Options(BaseModel):

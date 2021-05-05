@@ -3,7 +3,7 @@ from typing import List, Union, Optional
 
 from pydantic import BaseModel, Field
 
-from ..enums.dimension import On
+from .enums.dimension import On
 from ...utils import dimension as dimension_utils
 from ...utils.generics import ListGenericModel
 
