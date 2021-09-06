@@ -7,6 +7,7 @@ class Selected(str, Enum):
     penultimate_update_date = "penultimate_update_date"
     last_7_days = "last_7_days"
     last_30_days = "last_30_days"
+    last_90_days = "last_90_days"
     last_180_days = "last_180_days"
     last_365_days = "last_365_days"
 

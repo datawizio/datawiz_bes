@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, time
 from typing import Optional
 
 from pydantic import BaseModel, root_validator
@@ -36,3 +36,12 @@ class PrevDateRange(DateRange):
             assert values["date_from"] is not None and values["date_to"] is not None, \
                 f"date_from, date_to is required for '{PrevSelected.prev_date}'"
         return values
+
+
+class TimeRange(BaseModel):
+    time_from: time = time(0, 0, 0)
+    time_to: time = time(23, 59, 59)
+
+    @classmethod
+    def default(cls):
+        return cls()

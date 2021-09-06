@@ -30,4 +30,7 @@ class Metric(BaseModel):
 
 
 class Aggregate(ListGenericModel[Metric]):
-    pass
+
+    @classmethod
+    def default(cls):
+        return cls()

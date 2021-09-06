@@ -9,10 +9,17 @@ class Options(BaseModel):
     with_col_total: bool = False
     with_row_total: bool = False
     use_cache: bool = False
-    delta_interval: DeltaInterval = DeltaInterval.day
+    delta_interval: DeltaInterval = DeltaInterval.day_month_year
+    reindex_data: bool = True
+    concat_dimensions: bool = False
+    fixed_total: bool = False
 
     class Config:
         use_enum_values = True
+
+    @classmethod
+    def default(cls):
+        return cls()
 
 
 class RenderOptions(BaseModel):

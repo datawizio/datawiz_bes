@@ -9,8 +9,12 @@ from ...utils.generics import ListGenericModel
 
 
 class Lookups(BaseModel):
-    include: Optional[List[Union[int, str]]]
-    exclude: Optional[List[Union[int, str]]]
+    include: Optional[List[Union[int, str]]] = Field(min_items=1)
+    exclude: Optional[List[Union[int, str]]] = Field(min_items=1)
+    between: Optional[List[Union[int, str]]] = Field(min_items=2, max_items=2)
+    equal: Optional[List[int, str]]
+    not_equal: Optional[List[int, str]]
+    negate: bool = False
 
     @classmethod
     def default(cls):
@@ -27,6 +31,7 @@ class Dimension(BaseModel):
 
 class DimensionGroupBy(Dimension):
     display_fields: List[str] = ["name"]
+    force_reindex: Optional[bool]
     on: On = On.row
     by: str = "id"
 
@@ -39,7 +44,10 @@ class DimensionGroupBy(Dimension):
 
 
 class Filters(ListGenericModel[Dimension]):
-    pass
+
+    @classmethod
+    def default(cls):
+        return cls()
 
 
 class GroupBy(ListGenericModel[DimensionGroupBy]):
@@ -51,3 +59,7 @@ class GroupBy(ListGenericModel[DimensionGroupBy]):
     @property
     def rows(self) -> "GroupBy":
         return self.filter(on=On.row)
+
+    @classmethod
+    def default(cls):
+        return cls()
