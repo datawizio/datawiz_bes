@@ -12,8 +12,8 @@ class Lookups(BaseModel):
     include: Optional[List[Union[int, str]]] = Field(min_items=1)
     exclude: Optional[List[Union[int, str]]] = Field(min_items=1)
     between: Optional[List[Union[int, str]]] = Field(min_items=2, max_items=2)
-    equal: Optional[List[int, str]]
-    not_equal: Optional[List[int, str]]
+    equal: Optional[List[Union[int, str]]]
+    not_equal: Optional[List[Union[int, str]]]
     negate: bool = False
 
     @classmethod
