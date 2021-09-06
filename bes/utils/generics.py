@@ -34,21 +34,27 @@ class ListGenericModel(GenericModel, Generic[TList]):
         __root__ = self.__root__ + other.__root__
         return self.__class__(__root__=__root__)
 
+    def __len__(self) -> bool:
+        return bool(self.__root__)
+
+    def __bool__(self) -> bool:
+        return bool(self.__root__)
+
     @staticmethod
-    def _is_suit(obj: TList, **filters):
-        return all(
+    def _is_suit(obj: TList, *args, **filters):
+        return obj in args or all(
             (value(getattr(obj, key, None)) if callable(value) else getattr(obj, key, None) == value)
             for key, value in filters.items()
         )
 
-    def filter(self, **filters):
-        return self.__class__(__root__=[obj for obj in self.__root__ if self._is_suit(obj, **filters)])
+    def filter(self, *args, **filters):
+        return self.__class__(__root__=[obj for obj in self.__root__ if self._is_suit(obj, *args, **filters)])
 
-    def exclude(self, **filters):
-        return self.__class__(__root__=[obj for obj in self.__root__ if not self._is_suit(obj, **filters)])
+    def exclude(self, *args, **filters):
+        return self.__class__(__root__=[obj for obj in self.__root__ if not self._is_suit(obj, *args, **filters)])
 
-    def find(self, **filters) -> Optional[TList]:
-        data = self.filter(**filters)
+    def get(self, *args, **filters) -> Optional[TList]:
+        data = self.filter(*args, **filters)
         return data[0] if data else None
 
     def first(self) -> Optional[TList]:
@@ -57,6 +63,9 @@ class ListGenericModel(GenericModel, Generic[TList]):
     def values_list(self, *keys: str, flat: bool = False) -> List[Any]:
         assert len(keys) == 1 or (len(keys) > 1 and flat is False), '`flat` option cannot be used with more than 2 keys'
         return [tuple(getattr(o, key, None) for key in keys) if not flat else getattr(o, keys[0], None) for o in self]
+
+    def append(self, obj: TList):
+        self.__root__.append(obj)
 
     class Config:
         arbitrary_types_allowed = True
@@ -84,3 +93,5 @@ class ObjectGenericModel(GenericModel, Generic[TObject]):
     def __init__(self, __root__: TObject = None, **data):
         super().__init__(__root__=__root__, **data)
 
+    def __bool__(self) -> bool:
+        return bool(self.__root__)

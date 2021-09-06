@@ -17,7 +17,17 @@ class DataFrameFormatType(str, Enum):
 
 
 class DeltaInterval(str, Enum):
-    day = "day"
+    minute = "minute"
+    minute10 = "minute10"
+    minute30 = "minute30"
+    hour = "hour"
+    hour2 = "hour2"
+    hour3 = "hour3"
+    hour4 = "hour4"
+    week_day = "week_day"
     week = "week"
     month = "month"
+    quarter = "quarter"
     year = "year"
+    month_year = "month_year"
+    day_month_year = "day_month_year"
