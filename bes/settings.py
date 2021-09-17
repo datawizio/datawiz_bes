@@ -28,8 +28,20 @@ class OAuth2Settings(BaseModel):
         return cls()
 
 
+class ApiSettings(BaseSettings):
+    host: HttpUrl = "https://api-new-dev.datawiz.io"
+
+    def get_url(self, path: str) -> str:
+        return "{host}{path}".format(host=self.host, path=path)
+
+    @classmethod
+    def default(cls):
+        return cls()
+
+
 class Settings(BaseSettings):
     oauth2_settings: OAuth2Settings = Field(default_factory=OAuth2Settings.default)
+    api_settings: ApiSettings = Field(default_factory=ApiSettings.default)
 
     class Config:
         env_file = ".env"
