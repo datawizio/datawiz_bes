@@ -52,3 +52,6 @@ class BuilderQuery(BaseModel):
         ChartRenderOptions,
         DataFrameRenderOptions
     ] = Field(default_factory=TableRenderOptions.default)
+
+    class Config:
+        validate_assignment = True

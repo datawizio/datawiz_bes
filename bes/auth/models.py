@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, validate_arguments, Field
+from pydantic import BaseModel, Field
 
 from ..utils.generics import ListGenericModel
 
@@ -17,11 +17,17 @@ class Role(BaseModel):
     permissions: ListGenericModel[str]
     role_type: RoleType
 
+    class Config:
+        validate_assignment = True
+
 
 class ClientDefaults(BaseModel):
     date_to: datetime
     date_from: datetime
     role: Role
+
+    class Config:
+        validate_assignment = True
 
 
 class Client(BaseModel):
@@ -29,12 +35,8 @@ class Client(BaseModel):
     name: str
     defaults: Optional[ClientDefaults]
 
-    @validate_arguments
-    def set_defaults(self, defaults: Optional[ClientDefaults]):
-        self.defaults = defaults
-
-
-ListClients = ListGenericModel[Client]
+    class Config:
+        validate_assignment = True
 
 
 class User(BaseModel):
@@ -45,7 +47,8 @@ class User(BaseModel):
     photo: Optional[str]
     lang: str
     is_staff: bool = False
-    clients: ListClients = Field(default_factory=ListClients)
+    clients: ListGenericModel[Client] = Field(default_factory=ListGenericModel[Client])
 
     class Config:
+        validate_assignment = True
         fields = {"id": "user_id"}

@@ -65,7 +65,8 @@ class BESAuth:
         self._set_client_header(client)
         # TODO Except when not authorized
         self._selected_client = client
-        self._selected_client.defaults = self.get_defaults()
+        if self._selected_client is not None:
+            self._selected_client.defaults = self.get_defaults()
 
     @property
     def user(self) -> Optional[User]:
@@ -75,7 +76,10 @@ class BESAuth:
     @validate_arguments
     def user(self, user: Optional[User]):
         self._user = user
-        self.selected_client = self.user.clients.first()
+        if self._user is None:
+            self.selected_client = None
+        else:
+            self.selected_client = self.user.clients.first()
         logger.debug("Set user %s", user)
 
     # Use for different request of oauth2client
