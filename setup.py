@@ -10,7 +10,7 @@ setup(
     author="Datawiz.io",
     author_email="support@datawiz.io",
     license="MIT",
-    install_requires=["pydantic"],
+    install_requires=["pydantic[dotenv]", "httpx", "authlib", "tenacity"],
     setup_requires=["pytest-runner"],
     tests_require=["pytest==6.2.2"],
     test_suite="tests",
