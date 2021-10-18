@@ -58,5 +58,5 @@ class BuilderQuery(BaseModel):
     class Config:
         validate_assignment = True
 
-    def to_request_query(self) -> dict:
-        return self.dict(exclude_unset=True)
+    def to_request_query(self) -> str:
+        return self.json(exclude_unset=True)
