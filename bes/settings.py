@@ -29,7 +29,7 @@ class OAuth2Settings(BaseModel):
 
 
 class ApiSettings(BaseSettings):
-    host: HttpUrl = "https://api-new-dev.datawiz.io"
+    host: HttpUrl = "https://api-new.datawiz.io"
     api_path: str = "/api"
 
     def get_url(self, path: str) -> str:
