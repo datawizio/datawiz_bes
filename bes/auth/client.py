@@ -15,32 +15,30 @@ class BESOAuth2Mixin:
         kwargs.setdefault("auto_refresh_url", bes_settings.oauth2.token_url)
         super(BESOAuth2Mixin, self).__init__(**kwargs)
 
+    def fetch_token(self, url: str = bes_settings.oauth2.token_url, **kwargs) -> OAuth2Token:
+        return super(BESOAuth2Mixin, self).fetch_token(url, **kwargs)
+
+    def refresh_token(
+            self,
+            url: str = bes_settings.oauth2.token_url,
+            refresh_token: Optional[str] = None,
+            **kwargs
+    ) -> OAuth2Token:
+        return super(BESOAuth2Mixin, self).refresh_token(url, refresh_token=refresh_token, **kwargs)
+
+    def create_authorization_url(
+            self,
+            url: str = bes_settings.oauth2.authorize_url,
+            state: str = None,
+            code_verifier: str = None,
+            **kwargs
+    ):
+        return super(BESOAuth2Mixin, self).create_authorization_url(url, state, code_verifier, **kwargs)
+
 
 class BESOAuth2Client(BESOAuth2Mixin, OAuth2Client):
     """Sync session class for making OAuth2 authenticated requests to BES"""
 
-    def fetch_token(self, url: str = bes_settings.oauth2.token_url, **kwargs) -> OAuth2Token:
-        return super(BESOAuth2Mixin, self).fetch_token(url, **kwargs)
-
-    def refresh_token(
-            self,
-            url: str = bes_settings.oauth2.token_url,
-            refresh_token: Optional[str] = None,
-            **kwargs
-    ) -> OAuth2Token:
-        return super(BESOAuth2Mixin, self).refresh_token(url, refresh_token=refresh_token, **kwargs)
-
 
 class BESAsyncOAuth2Client(BESOAuth2Mixin, AsyncOAuth2Client):
     """Async session class for making OAuth2 authenticated requests to BES"""
-
-    def fetch_token(self, url: str = bes_settings.oauth2.token_url, **kwargs) -> OAuth2Token:
-        return super(BESOAuth2Mixin, self).fetch_token(url, **kwargs)
-
-    def refresh_token(
-            self,
-            url: str = bes_settings.oauth2.token_url,
-            refresh_token: Optional[str] = None,
-            **kwargs
-    ) -> OAuth2Token:
-        return super(BESOAuth2Mixin, self).refresh_token(url, refresh_token=refresh_token, **kwargs)
