@@ -10,21 +10,21 @@ class BESOAuth2Mixin:
     """Bes OAuth2 Mixin for set default application credentials"""
 
     def __init__(self, **kwargs):
-        kwargs.setdefault("client_id", bes_settings.oauth2_settings.client_id)
-        kwargs.setdefault("client_secret", bes_settings.oauth2_settings.client_secret)
-        kwargs.setdefault("auto_refresh_url", bes_settings.oauth2_settings.token_url)
+        kwargs.setdefault("client_id", bes_settings.oauth2.client_id)
+        kwargs.setdefault("client_secret", bes_settings.oauth2.client_secret)
+        kwargs.setdefault("auto_refresh_url", bes_settings.oauth2.token_url)
         super(BESOAuth2Mixin, self).__init__(**kwargs)
 
 
 class BESOAuth2Client(BESOAuth2Mixin, OAuth2Client):
     """Sync session class for making OAuth2 authenticated requests to BES"""
 
-    def fetch_token(self, url: str = bes_settings.oauth2_settings.token_url, **kwargs) -> OAuth2Token:
+    def fetch_token(self, url: str = bes_settings.oauth2.token_url, **kwargs) -> OAuth2Token:
         return super(BESOAuth2Mixin, self).fetch_token(url, **kwargs)
 
     def refresh_token(
             self,
-            url: str = bes_settings.oauth2_settings.token_url,
+            url: str = bes_settings.oauth2.token_url,
             refresh_token: Optional[str] = None,
             **kwargs
     ) -> OAuth2Token:
@@ -34,12 +34,12 @@ class BESOAuth2Client(BESOAuth2Mixin, OAuth2Client):
 class BESAsyncOAuth2Client(BESOAuth2Mixin, AsyncOAuth2Client):
     """Async session class for making OAuth2 authenticated requests to BES"""
 
-    def fetch_token(self, url: str = bes_settings.oauth2_settings.token_url, **kwargs) -> OAuth2Token:
+    def fetch_token(self, url: str = bes_settings.oauth2.token_url, **kwargs) -> OAuth2Token:
         return super(BESOAuth2Mixin, self).fetch_token(url, **kwargs)
 
     def refresh_token(
             self,
-            url: str = bes_settings.oauth2_settings.token_url,
+            url: str = bes_settings.oauth2.token_url,
             refresh_token: Optional[str] = None,
             **kwargs
     ) -> OAuth2Token:

@@ -1,12 +1,11 @@
-from typing import List
+from typing import List, Optional
 
-from pydantic import BaseSettings, BaseModel, HttpUrl, Field
+from pydantic import BaseSettings, HttpUrl, Field, BaseModel
 
 
 class OAuth2Settings(BaseModel):
-    client_id: str = "R6lRcOFoUtqNrXiCNtAo5yMIcInUtEKooNP4JCcI"
-    client_secret: str = "md9PZH9IwgaQFdL3jTE52tbdyI7brkZx2rS6hPs0oUbmLGmliMD7DM6" \
-                         "qIJ9zsOaoEZueGSvq19BVelc1TeXPVJeni3LNsGT1SCQP5EVHR28JLRdfDzRJejVQ7K9jzbNs"
+    client_id: Optional[str]
+    client_secret: Optional[str]
     host: HttpUrl = "https://bes.datawiz.io"
     authorize_path: str = "/o/authorize/"
     token_path: str = "/o/token/"
@@ -28,7 +27,7 @@ class OAuth2Settings(BaseModel):
         return cls()
 
 
-class ApiSettings(BaseSettings):
+class ApiSettings(BaseModel):
     host: HttpUrl = "https://api-new.datawiz.io"
     api_path: str = "/api"
 
@@ -44,10 +43,11 @@ class ApiSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
-    oauth2_settings: OAuth2Settings = Field(default_factory=OAuth2Settings.default)
-    api_settings: ApiSettings = Field(default_factory=ApiSettings.default)
+    oauth2: OAuth2Settings = Field(default_factory=OAuth2Settings.default)
+    api: ApiSettings = Field(default_factory=ApiSettings.default)
 
     class Config:
+        env_prefix = "bes_"
         env_file = ".env"
         env_file_encoding = "utf-8"
 

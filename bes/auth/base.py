@@ -10,7 +10,7 @@ from tenacity import retry, retry_if_exception_type, stop_after_attempt
 
 from . import errors
 from .client import BESOAuth2Client
-from .constants import CLIENT_HEADER
+from .constants import CLIENT_ID_HEADER
 from .models import Client, User, ClientDefaults
 from .types import RequestData, RequestResponse, QueryParamTypes, HeaderTypes
 from ..settings import bes_settings
@@ -44,18 +44,18 @@ class BESAuth:
     def _set_client_header(self, client: Optional[Client]):
         self._request_headers = self._request_headers.copy()
         if client is None:
-            self._request_headers.pop(CLIENT_HEADER, None)
+            self._request_headers.pop(CLIENT_ID_HEADER, None)
         else:
-            self._request_headers[CLIENT_HEADER] = str(client.id)
+            self._request_headers[CLIENT_ID_HEADER] = str(client.id)
 
     def initial(self):
         """Initial information about authorization user"""
-        user_dict = self.get(bes_settings.api_settings.get_url("/api/initial/"))
+        user_dict = self.get(bes_settings.api.get_url("/api/initial/"))
         self.user = User(**user_dict)
 
     def get_client_defaults(self) -> ClientDefaults:
         """Get default information about client."""
-        data = self.get(url=bes_settings.api_settings.get_url("/api/defaults/"))
+        data = self.get(url=bes_settings.api.get_url("/api/defaults/"))
         return ClientDefaults(**data)
 
     @property
@@ -111,8 +111,8 @@ class BESAuth:
 
     def _check_response(self, response: Response):
         if self.selected_client is not None:
-            response_client_id = response.headers.get(CLIENT_HEADER)
-            request_client_id = self._request_headers.get(CLIENT_HEADER)
+            response_client_id = response.headers.get(CLIENT_ID_HEADER)
+            request_client_id = self._request_headers.get(CLIENT_ID_HEADER)
             if response_client_id is not None and request_client_id != response_client_id:
                 # Bes has no client_id in headers
                 raise errors.BESSelectedClientError(
