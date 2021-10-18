@@ -41,7 +41,7 @@ class BESBuilder:
 
     def fetch_data(self, query_params: QueryParamTypes = None):
         url = bes_settings.api.get_api_url("/builder/create-table/")
-        data = self.query.to_request_query()
+        data = self.query.to_dict()
         query_params = self.query_params.merge(query_params or {})
         res = self.auth.post(url=url, data=data, params=query_params)
         return res

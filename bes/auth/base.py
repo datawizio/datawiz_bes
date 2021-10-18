@@ -1,7 +1,7 @@
 import json
 from copy import copy
 from logging import getLogger
-from typing import Optional, Dict, Literal, Callable, Union
+from typing import Optional, Dict, Literal, Callable, Union, Tuple
 
 from authlib.integrations.base_client import OAuthError
 from httpx import Response, codes
@@ -28,7 +28,7 @@ class BESAuth:
 
         self._user = None
         self._selected_client = None
-        self._request_headers = {"Content-Type": "application/json"}
+        self._request_headers = {}
 
     # OAuth2 Authorization Methods
     @classmethod
@@ -104,10 +104,11 @@ class BESAuth:
         return request_headers
 
     @staticmethod
-    def _format_request_data(data: RequestData) -> RequestData:
+    def _format_request_data(data: RequestData, headers: Dict) -> Tuple[RequestData, Dict]:
         if isinstance(data, dict):
-            return json.dumps(data)
-        return data
+            headers.setdefault("Content-Type", "application/json")
+            data = json.dumps(data)
+        return data, headers
 
     def _check_response(self, response: Response):
         if self.selected_client is not None:
@@ -140,7 +141,7 @@ class BESAuth:
             **kwargs
     ):
         headers = self._get_request_headers(headers or {})
-        data = self._format_request_data(data)
+        data, headers = self._format_request_data(data, headers)
         response = self.oauth2client.request(method, url=url, data=data, headers=headers, params=params, **kwargs)
         self._check_response(response)
         return response
