@@ -58,9 +58,7 @@ class BuilderQuery(BaseModel):
     class Config:
         validate_assignment = True
 
-    def to_dict(self) -> dict:
-        """Use for request data in BESBuilder with data of type `dict`"""
-        return self.dict(exclude_unset=True)
-
-    def to_json(self) -> "str":
-        return self.json(exclude_unset=True)
+    def to_json(self, **kwargs) -> "str":
+        """Use for request data in BESBuilder with data of type `json`"""
+        kwargs.setdefault("exclude_none", True)
+        return self.json(**kwargs)
