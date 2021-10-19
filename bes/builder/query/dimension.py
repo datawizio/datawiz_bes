@@ -35,19 +35,21 @@ class DimensionGroupBy(Dimension):
     on: On = On.row
     by: str = "id"
 
-    @cached_property
+    @property
     def dimension_display_fields(self) -> List[str]:
         return dimension_utils.dimension_display_fields(self.dimension, self.display_fields)
 
-    class Config(Dimension.Config):
-        keep_untouched = (cached_property,)
 
-
-class Filters(ListGenericModel[Dimension]):
+class Filters(ListGenericModel[Union[Dimension, "Query"]]):
 
     @classmethod
     def default(cls):
         return cls()
+
+
+from .query import Query
+
+Filters.update_forward_refs()
 
 
 class GroupBy(ListGenericModel[DimensionGroupBy]):

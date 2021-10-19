@@ -12,6 +12,7 @@ from .options import (
     ChartRenderOptions,
     DataFrameRenderOptions
 )
+from .query import Query
 
 __all__ = (
     "DateRange",
@@ -22,6 +23,7 @@ __all__ = (
     "Lookups",
     "GroupBy",
     "Filters",
+    "Query",
     "DateRange",
     "PrevDateRange",
     "Metric",
@@ -43,7 +45,7 @@ class BuilderQuery(BaseModel):
 
     aggregate: Aggregate = Field(default_factory=Aggregate.default)
     group_by: GroupBy = Field(default_factory=GroupBy.default)
-    filters: Filters = Field(default_factory=Filters.default)
+    filters: Union[Filters, Query] = Field(default_factory=Filters.default)
 
     options: Options = Field(default_factory=Options.default)
     render_options: Union[
@@ -52,3 +54,13 @@ class BuilderQuery(BaseModel):
         ChartRenderOptions,
         DataFrameRenderOptions
     ] = Field(default_factory=TableRenderOptions.default)
+
+    class Config:
+        validate_assignment = True
+
+    def to_dict(self) -> dict:
+        """Use for request data in BESBuilder with data of type `dict`"""
+        return self.dict(exclude_unset=True)
+
+    def to_json(self) -> "str":
+        return self.json(exclude_unset=True)

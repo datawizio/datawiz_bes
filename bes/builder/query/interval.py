@@ -1,5 +1,5 @@
 from datetime import date, time
-from typing import Optional
+from typing import Optional, Dict
 
 from pydantic import BaseModel, root_validator
 
@@ -12,9 +12,9 @@ class DateRange(BaseModel):
     date_to: Optional[date]
 
     @root_validator()
-    def date_range_require(cls, values):
-        if values["selected"] == Selected.date:
-            assert values["date_from"] is not None and values["date_to"] is not None, \
+    def date_range_require(cls, values: Dict) -> Dict:
+        if values.get("selected") == Selected.date:
+            assert values.get("date_from") is not None and values.get("date_to") is not None, \
                 f"date_from, date_to is required for '{Selected.date}'"
         return values
 
@@ -24,16 +24,15 @@ class DateRange(BaseModel):
 
     class Config:
         use_enum_values = True
-        arbitrary_types_allowed = True
 
 
 class PrevDateRange(DateRange):
     selected: PrevSelected = PrevSelected.previous
 
     @root_validator()
-    def date_range_require(cls, values):
-        if values["selected"] == Selected.date:
-            assert values["date_from"] is not None and values["date_to"] is not None, \
+    def date_range_require(cls, values: Dict) -> Dict:
+        if values.get("selected") == PrevSelected.prev_date:
+            assert values.get("date_from") is not None and values.get("date_to") is not None, \
                 f"date_from, date_to is required for '{PrevSelected.prev_date}'"
         return values
 
