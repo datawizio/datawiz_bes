@@ -24,7 +24,6 @@ jobs:
 
       # Set .pytest_env for set config
       - name: Create .pytest_env
-        uses: some-action@v1
         env:
           PYTEST_ENV: .pytest_env
         run: |
