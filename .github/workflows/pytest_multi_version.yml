@@ -7,6 +7,11 @@ on:
   pull_request:
     branches:
       - "master"
+env:
+  BES_PYTEST_CLIENT_ID: ${{ secrets.BES_PYTEST_CLIENT_ID }}
+  BES_PYTEST_CLIENT_SECRET: ${{ secrets.BES_PYTEST_CLIENT_SECRET }}
+  BES_PYTEST_USERNAME: ${{ secrets.BES_PYTEST_USERNAME }}
+  BES_PYTEST_PASSWORD: ${{ secrets.BES_PYTEST_PASSWORD }}
 
 jobs:
   test:
