@@ -18,8 +18,13 @@ jobs:
 
     steps:
 
+      # Checkout the latest code from the repo
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
       # Set .pytest_env for set config
       - name: Create .pytest_env
+        uses: some-action@v1
         env:
           PYTEST_ENV: .pytest_env
         run: |
@@ -29,10 +34,6 @@ jobs:
           echo BES_PYTEST_PASSWORD: ${{ secrets.BES_PYTEST_PASSWORD }} >> $PYTEST_ENV
           echo BES_PYTEST_USERNAME: ${{ secrets.BES_PYTEST_USERNAME }} >> $PYTEST_ENV
           cat $PYTEST_ENV
-
-      # Checkout the latest code from the repo
-      - name: Checkout repo
-        uses: actions/checkout@v2
 
         # Setup which version of Python to use
       - name: Set Up Python ${{ matrix.python-version }}
