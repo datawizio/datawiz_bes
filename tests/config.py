@@ -12,7 +12,7 @@ class PyTestSettings(BaseSettings):
 
     class Config:
         env_prefix = "BES_PYTEST_"
-        env_file = ".env"
+        env_file = ".pytest_env"
         env_file_encoding = "utf-8"
 
     def to_oauth2config(self) -> dict:

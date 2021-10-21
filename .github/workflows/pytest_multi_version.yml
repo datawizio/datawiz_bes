@@ -17,13 +17,22 @@ jobs:
         python-version: [3.6, 3.7, 3.8, 3.9, '3.10']
 
     steps:
+
+      # Set .pytest_env for set config
+      - name: Create .pytest_env
+        env:
+          PYTEST_ENV: .pytest_env
+        run: |
+          touch $PYTEST_ENV
+          echo BES_PYTEST_CLIENT_ID: ${{ secrets.BES_PYTEST_CLIENT_ID }} >> $PYTEST_ENV
+          echo BES_PYTEST_CLIENT_SECRET: ${{ secrets.BES_PYTEST_CLIENT_SECRET }} >> $PYTEST_ENV
+          echo BES_PYTEST_PASSWORD: ${{ secrets.BES_PYTEST_PASSWORD }} >> $PYTEST_ENV
+          echo BES_PYTEST_USERNAME: ${{ secrets.BES_PYTEST_USERNAME }} >> $PYTEST_ENV
+          cat $PYTEST_ENV
+
       # Checkout the latest code from the repo
       - name: Checkout repo
         uses: actions/checkout@v2
-
-      # Set .env file
-      - id: dotenv
-        uses: ./.github/actions/dotenv-action
 
         # Setup which version of Python to use
       - name: Set Up Python ${{ matrix.python-version }}
