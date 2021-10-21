@@ -36,21 +36,16 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pipenv-
-            ${{ runner.os }}-
-            ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile') }}
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --deploy --dev
-      - name: Run test suite
-        run: |
-          pipenv run test
-
       - name: Run python envs
         run: |
           import os
           print(os.environ)
         shell: python
+      - name: Run test suite
+        run: |
+          pipenv run test
