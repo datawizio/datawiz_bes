@@ -12,6 +12,6 @@ setup(
     license="MIT",
     install_requires=["pydantic[dotenv]", "httpx", "authlib", "tenacity"],
     setup_requires=["pytest-runner"],
-    tests_require=["pytest==6.2.2"],
+    tests_require=["pytest>=6.2.5"],
     test_suite="tests",
 )
