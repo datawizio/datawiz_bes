@@ -11,7 +11,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    environment:
+      name: .pytest_env
     strategy:
       matrix:
         # Run in all these versions of Python
