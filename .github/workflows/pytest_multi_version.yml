@@ -18,7 +18,7 @@ jobs:
 
     steps:
       # Set .env file
-      - id: dotenv
+      - name: dotenv
         uses: actions/dotenv-action
 
       # Checkout the latest code from the repo
