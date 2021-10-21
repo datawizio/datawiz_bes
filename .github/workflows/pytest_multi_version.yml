@@ -18,8 +18,8 @@ jobs:
 
     steps:
       # Set .env file
-      - name: dotenv
-        uses: actions/dotenv-action
+      - id: dotenv
+        uses: ./.github/actions/dotenv-action
 
       # Checkout the latest code from the repo
       - name: Checkout repo
