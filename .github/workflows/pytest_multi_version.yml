@@ -17,13 +17,14 @@ jobs:
         python-version: [3.6, 3.7, 3.8, 3.9, '3.10']
 
     steps:
+      # Checkout the latest code from the repo
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
       # Set .env file
       - id: dotenv
         uses: ./.github/actions/dotenv-action
 
-      # Checkout the latest code from the repo
-      - name: Checkout repo
-        uses: actions/checkout@v2
         # Setup which version of Python to use
       - name: Set Up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
