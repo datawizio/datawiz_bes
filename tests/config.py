@@ -14,7 +14,6 @@ class PyTestSettings(BaseSettings):
         env_prefix = "BES_PYTEST_"
         env_file = ".pytest_env"
         env_file_encoding = "utf-8"
-        secrets_dir = "/run/secrets"
 
     def to_oauth2config(self) -> dict:
         return self.dict(include={"client_id", "client_secret"})
