@@ -6,19 +6,19 @@ from bes.builder.query import Dimension, Lookups, GroupBy, Filters, Query
 class TestDimension(unittest.TestCase):
 
     def test_default_initial(self):
-        self.dimension = Dimension(dimension="dimension")
+        dimension = Dimension(dimension="dimension")
 
-        self.lookups = Lookups(include=[1, 2], exclude=[2])
-        self.empty_lookups = Lookups()
+        lookups = Lookups(include=[1, 2], exclude=[2])
+        empty_lookups = Lookups()
 
-        self.dimension_with_lookups = Dimension(dimension="dimension2", lookups=self.lookups)
-        self.dimension_with_empty_lookups = Dimension(dimension="dimension3", lookups=self.empty_lookups)
+        dimension_with_lookups = Dimension(dimension="dimension2", lookups=lookups)
+        dimension_with_empty_lookups = Dimension(dimension="dimension3", lookups=empty_lookups)
 
-        self.group_by = GroupBy([self.dimension, self.dimension_with_empty_lookups])
-        self.empty_group_by = GroupBy()
+        group_by = GroupBy([dimension, dimension_with_empty_lookups])
+        empty_group_by = GroupBy()
 
-        self.filters = Filters([self.dimension_with_lookups])
-        self.empty_filters = Filters()
+        filters = Filters([dimension_with_lookups])
+        empty_filters = Filters()
 
-        self.query = Query(filters=self.filters)
-        self.empty_query = Query()
+        query = Query(filters=filters)
+        empty_query = Query()
