@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+wheel = ">=0.36.2"
+setuptools = ">=44.0.0"
+twine = ">=3.4.1"
+pydantic = "*"
+python-dotenv = "*"
+httpx = "*"
+tenacity = "*"
+authlib = "*"
+
+[dev-packages]
+pytest = ">=6.2.5"
+pytest-runner = ">=5.3.1"
+pytest-cover = ">=3.0.0"
+
+[requires]
+python_version = "3"
+
+[scripts]
+test = "python -m pytest -v"
+test_coverage = "python -m pytest --cov=bes"
+test_coverage_report = "python -m pytest --cov-report html:/tests/reports/coverage"
+test_unit = "python -m unittest discover -v"

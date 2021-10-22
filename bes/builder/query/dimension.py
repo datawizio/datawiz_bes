@@ -1,9 +1,8 @@
-from functools import cached_property
 from typing import List, Union, Optional
 
 from pydantic import BaseModel, Field
 
-from .enums.dimension import On
+from .enums.dimension import On, By, Mode
 from ...utils import dimension as dimension_utils
 from ...utils.generics import ListGenericModel
 
@@ -24,20 +23,17 @@ class Lookups(BaseModel):
 class Dimension(BaseModel):
     dimension: str
     lookups: Lookups = Field(default_factory=Lookups.default)
-
-    class Config:
-        use_enum_values = True
-
-
-class DimensionGroupBy(Dimension):
     display_fields: List[str] = ["name"]
     force_reindex: Optional[bool]
     on: On = On.row
-    by: str = "id"
+    by: By = By.id
 
     @property
     def dimension_display_fields(self) -> List[str]:
         return dimension_utils.dimension_display_fields(self.dimension, self.display_fields)
+
+    class Config:
+        use_enum_values = True
 
 
 class Filters(ListGenericModel[Union[Dimension, "Query"]]):
@@ -47,12 +43,17 @@ class Filters(ListGenericModel[Union[Dimension, "Query"]]):
         return cls()
 
 
-from .query import Query
+class Query(BaseModel):
+    mode: Mode = Mode.and_
+    filters: Filters = Field(default_factory=lambda: Filters.default())
+    negate: bool = False
+
 
 Filters.update_forward_refs()
+Query.update_forward_refs()
 
 
-class GroupBy(ListGenericModel[DimensionGroupBy]):
+class GroupBy(ListGenericModel[Dimension]):
 
     @property
     def columns(self) -> "GroupBy":
