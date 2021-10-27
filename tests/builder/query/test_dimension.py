@@ -1,4 +1,5 @@
 import unittest
+from datetime import date
 
 from bes.builder.query import Dimension, Lookups, GroupBy, Filters, Query
 
@@ -22,3 +23,11 @@ class TestDimension(unittest.TestCase):
 
         query = Query(filters=filters)
         empty_query = Query()
+
+    def test_lookups_with_date(self):
+        lookups = Lookups(include=[date(2020, 1, 1), date(2020, 1, 2)])
+
+        self.assertEqual(
+            lookups.json(include={"include"}),
+            '{"include": ["2020-01-01", "2020-01-02"]}'
+        )
