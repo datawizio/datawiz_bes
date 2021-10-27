@@ -1,10 +1,10 @@
 from typing import Any
 
 from httpx import QueryParams
-from httpx._types import QueryParamTypes
 
 from .query import BuilderQuery
 from ..auth import BESAuth
+from ..auth.types import QueryParamTypes
 from ..settings import bes_settings
 
 __all__ = (

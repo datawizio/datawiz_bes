@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List, Union, Optional
 
 from pydantic import BaseModel, Field
@@ -8,11 +9,11 @@ from ...utils.generics import ListGenericModel
 
 
 class Lookups(BaseModel):
-    include: Optional[List[Union[int, str]]] = Field(min_items=1)
-    exclude: Optional[List[Union[int, str]]] = Field(min_items=1)
-    between: Optional[List[Union[int, str]]] = Field(min_items=2, max_items=2)
-    equal: Optional[List[Union[int, str]]]
-    not_equal: Optional[List[Union[int, str]]]
+    include: Optional[List[Union[int, str, date]]] = Field(min_items=1)
+    exclude: Optional[List[Union[int, str, date]]] = Field(min_items=1)
+    between: Optional[List[Union[int, str, date]]] = Field(min_items=2, max_items=2)
+    equal: Optional[List[Union[int, str, date]]]
+    not_equal: Optional[List[Union[int, str, date]]]
     negate: bool = False
 
     @classmethod
