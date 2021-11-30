@@ -14,6 +14,10 @@ class Lookups(BaseModel):
     between: Optional[List[Union[int, str, date]]] = Field(min_items=2, max_items=2)
     equal: Optional[List[Union[int, str, date]]]
     not_equal: Optional[List[Union[int, str, date]]]
+    gte: Optional[Union[int, str]]
+    gt: Optional[Union[int, str]]
+    lte: Optional[Union[int, str]]
+    lt: Optional[Union[int, str]]
     negate: bool = False
 
     @classmethod
