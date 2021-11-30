@@ -34,8 +34,8 @@ class ListGenericModel(GenericModel, Generic[TList]):
         __root__ = self.__root__ + other.__root__
         return self.__class__(__root__=__root__)
 
-    def __len__(self) -> bool:
-        return bool(self.__root__)
+    def __len__(self) -> int:
+        return len(self.__root__)
 
     def __bool__(self) -> bool:
         return bool(self.__root__)
