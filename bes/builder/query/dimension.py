@@ -25,6 +25,14 @@ class Lookups(BaseModel):
         return dict()
 
 
+class TreeDimensionOptions(BaseModel):
+    horizontally_expand: bool = False
+
+    @classmethod
+    def default(cls) -> "TreeDimensionOptions":
+        return cls()
+
+
 class Dimension(BaseModel):
     dimension: str
     lookups: Lookups = Field(default_factory=Lookups.default)
@@ -32,6 +40,7 @@ class Dimension(BaseModel):
     force_reindex: Optional[bool]
     on: On = On.row
     by: By = By.id
+    tree_options: TreeDimensionOptions = TreeDimensionOptions.default()
 
     @property
     def dimension_display_fields(self) -> List[str]:
