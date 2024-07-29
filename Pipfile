@@ -7,7 +7,7 @@ name = "pypi"
 wheel = ">=0.36.2"
 setuptools = ">=44.0.0"
 twine = ">=3.4.1"
-pydantic = "==1.10.7"
+pydantic = "==2.8.2"
 python-dotenv = "==1.0.0"
 httpx = "==0.24.0"
 tenacity = "==8.2.2"
@@ -19,7 +19,7 @@ pytest-runner = ">=5.3.1"
 pytest-cover = ">=3.0.0"
 
 [requires]
-python_version = "3"
+python_version = "3.12"
 
 [scripts]
 test = "python -m pytest -v"

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseSettings, HttpUrl, Field, BaseModel
+from pydantic.v1 import BaseSettings, HttpUrl, Field, BaseModel
 
 
 class OAuth2Settings(BaseModel):

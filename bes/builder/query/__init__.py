@@ -1,6 +1,6 @@
 from typing import Union
 
-from pydantic import BaseModel, Field
+from pydantic.v1 import BaseModel, Field
 
 from .dimension import Dimension, GroupBy, Filters, Lookups, Query
 from .interval import DateRange, PrevDateRange, TimeRange
