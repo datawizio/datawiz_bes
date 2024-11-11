@@ -13,11 +13,20 @@ class Selected(str, Enum):
 
     week_begin = "week_begin"
     month_begin = "month_begin"
-    season_begin = "season_begin"
+    quarter_begin = "quarter_begin"
     year_begin = "year_begin"
 
     prev_week = "prev_week"
     prev_month = "prev_month"
+    prev_quarter = "prev_quarter"
+    prev_year = "prev_year"
+
+    current_day = "current_day"
+    current_week = "current_week"
+    current_month = "current_month"
+    current_quarter = "current_quarter"
+    current_year = "current_year"
+
     all_time = "all_time"
 
 
@@ -29,3 +38,5 @@ class PrevSelected(str, Enum):
     prev_last_month = "prev_last_month"
     prev_last_quarter = "prev_last_quarter"
     prev_last_year = "prev_last_year"
+
+    same_weekday_prev_year = "same_weekday_prev_year"
