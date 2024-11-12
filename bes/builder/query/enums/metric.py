@@ -10,6 +10,8 @@ class Condition(str, Enum):
     le = "le"
     top = "top"
     bottom = "bottom"
+    abc = "abc"
+    contains = "contains"
 
 
 class DType(str, Enum):
@@ -21,3 +23,5 @@ class DType(str, Enum):
     date = "date"
     time = "time"
     datetime = "datetime"
+    abc = "abc"
+    with_icon = "with_icon"

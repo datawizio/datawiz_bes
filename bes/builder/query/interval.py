@@ -14,8 +14,9 @@ class DateRange(BaseModel):
     @root_validator()
     def date_range_require(cls, values: Dict) -> Dict:
         if values.get("selected") == Selected.date:
-            assert values.get("date_from") is not None and values.get("date_to") is not None, \
-                f"date_from, date_to is required for '{Selected.date}'"
+            assert (
+                values.get("date_from") is not None and values.get("date_to") is not None
+            ), f"date_from, date_to is required for '{Selected.date}'"
         return values
 
     @classmethod
@@ -32,8 +33,9 @@ class PrevDateRange(DateRange):
     @root_validator()
     def date_range_require(cls, values: Dict) -> Dict:
         if values.get("selected") == PrevSelected.prev_date:
-            assert values.get("date_from") is not None and values.get("date_to") is not None, \
-                f"date_from, date_to is required for '{PrevSelected.prev_date}'"
+            assert (
+                values.get("date_from") is not None and values.get("date_to") is not None
+            ), f"date_from, date_to is required for '{PrevSelected.prev_date}'"
         return values
 
 
