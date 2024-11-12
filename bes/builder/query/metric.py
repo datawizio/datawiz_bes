@@ -1,6 +1,6 @@
 from typing import List, Union, Optional
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from .enums.metric import Condition, DType
 from ...utils.generics import ListGenericModel

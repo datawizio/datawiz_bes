@@ -5,7 +5,7 @@ from typing import Optional, Dict, Literal, Callable, Union, Tuple
 
 from authlib.integrations.base_client import OAuthError
 from httpx import Response, codes
-from pydantic import validate_arguments
+from pydantic.v1 import validate_arguments
 from tenacity import retry, retry_if_exception_type, stop_after_attempt
 
 from . import errors

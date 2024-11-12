@@ -1,7 +1,7 @@
 from datetime import date
 from typing import List, Union, Optional
 
-from pydantic import BaseModel, Field
+from pydantic.v1 import BaseModel, Field
 
 from .enums.dimension import On, By, Mode
 from ...utils import dimension as dimension_utils

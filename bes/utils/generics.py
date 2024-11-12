@@ -1,7 +1,7 @@
 from functools import cached_property
 from typing import TypeVar, Generic, List, Iterable, Optional, Any
 
-from pydantic.generics import GenericModel
+from pydantic.v1.generics import GenericModel
 
 TList = TypeVar("TList")
 

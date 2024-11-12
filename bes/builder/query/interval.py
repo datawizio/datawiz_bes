@@ -1,7 +1,7 @@
 from datetime import date, time
 from typing import Optional, Dict
 
-from pydantic import BaseModel, root_validator
+from pydantic.v1 import BaseModel, root_validator
 
 from .enums.interval import Selected, PrevSelected
 
