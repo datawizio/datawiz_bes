@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseSettings
+from pydantic.v1 import BaseSettings
 
 
 class PyTestSettings(BaseSettings):
