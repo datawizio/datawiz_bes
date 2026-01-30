@@ -5,8 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class OAuth2Settings(BaseModel):
-    client_id: Optional[str]
-    client_secret: Optional[str]
+    client_id: Optional[str] = None
+    client_secret: Optional[str] = None
     host: HttpUrl = "https://bes.datawiz.io"
     authorize_path: str = "/o/authorize/"
     token_path: str = "/o/token/"

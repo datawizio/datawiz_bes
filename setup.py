@@ -11,9 +11,10 @@ setup(
     author_email="support@datawiz.io",
     license="MIT",
     install_requires=[
-        "pydantic>=2.12.5",
-        "pydantic-settings",
-        "httpx==0.27.0",
+        "pydantic==2.12.5",
+        "pydantic-settings==2.12.0",
+        "httpx==0.28.1",
+        "httpcore==1.0.9",
         "authlib==1.2.0",
         "tenacity==8.2.2",
         "python-dotenv==1.0.0",
