@@ -1,7 +1,7 @@
 from datetime import date
 from typing import List, Union, Optional
 
-from pydantic.v1 import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from .enums.dimension import On, By, Mode
 from ...utils import dimension as dimension_utils
@@ -9,9 +9,9 @@ from ...utils.generics import ListGenericModel
 
 
 class Lookups(BaseModel):
-    include: Optional[List[Union[int, str, date]]] = Field(min_items=1)
-    exclude: Optional[List[Union[int, str, date]]] = Field(min_items=1)
-    between: Optional[List[Union[int, str, date]]] = Field(min_items=2, max_items=2)
+    include: Optional[List[Union[int, str, date]]] = Field(min_length=1)
+    exclude: Optional[List[Union[int, str, date]]] = Field(min_length=1)
+    between: Optional[List[Union[int, str, date]]] = Field(min_length=2, max_length=2)
     equal: Optional[List[Union[int, str, date]]]
     not_equal: Optional[List[Union[int, str, date]]]
     gte: Optional[Union[int, str]]
@@ -40,14 +40,13 @@ class Dimension(BaseModel):
     force_reindex: Optional[bool]
     on: On = On.row
     by: By = By.id
-    tree_options: TreeDimensionOptions = TreeDimensionOptions.default()
+    tree_options: TreeDimensionOptions = Field(default_factory=TreeDimensionOptions.default)
 
     @property
     def dimension_display_fields(self) -> List[str]:
         return dimension_utils.dimension_display_fields(self.dimension, self.display_fields)
 
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)
 
 
 class Filters(ListGenericModel[Union[Dimension, "Query"]]):
@@ -63,8 +62,8 @@ class Query(BaseModel):
     negate: bool = False
 
 
-Filters.update_forward_refs()
-Query.update_forward_refs()
+Filters.model_rebuild()
+Query.model_rebuild()
 
 
 class GroupBy(ListGenericModel[Dimension]):

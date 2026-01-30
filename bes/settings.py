@@ -1,6 +1,7 @@
 from typing import List, Optional
 
-from pydantic.v1 import BaseSettings, HttpUrl, Field, BaseModel
+from pydantic import BaseModel, Field, HttpUrl
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class OAuth2Settings(BaseModel):
@@ -46,10 +47,11 @@ class Settings(BaseSettings):
     oauth2: OAuth2Settings = Field(default_factory=OAuth2Settings.default)
     api: ApiSettings = Field(default_factory=ApiSettings.default)
 
-    class Config:
-        env_prefix = "bes_"
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = SettingsConfigDict(
+        env_prefix="bes_",
+        env_file=".env",
+        env_file_encoding="utf-8",
+    )
 
 
 bes_settings: Settings = Settings()

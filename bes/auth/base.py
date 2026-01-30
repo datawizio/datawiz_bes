@@ -5,7 +5,7 @@ from typing import Optional, Dict, Literal, Callable, Union, Tuple
 
 from authlib.integrations.base_client import OAuthError
 from httpx import Response, codes
-from pydantic.v1 import validate_arguments
+from pydantic import validate_call
 from tenacity import retry, retry_if_exception_type, stop_after_attempt
 
 from . import errors
@@ -66,7 +66,7 @@ class BESAuth:
         return self._selected_client
 
     @selected_client.setter
-    @validate_arguments
+    @validate_call
     def selected_client(self, client: Optional[Client]):
         self._set_client_header(client)
         self._selected_client = client
@@ -80,7 +80,7 @@ class BESAuth:
         return self._user
 
     @user.setter
-    @validate_arguments
+    @validate_call
     def user(self, user: Optional[User]):
         """Set user of authorization session and selected client."""
         self._user = user

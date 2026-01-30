@@ -19,7 +19,7 @@ pytest-runner = ">=5.3.1"
 pytest-cover = ">=3.0.0"
 
 [requires]
-python_version = "3.12"
+python_version = "3.14"
 
 [scripts]
 test = "python -m pytest -v"

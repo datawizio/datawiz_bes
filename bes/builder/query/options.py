@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from .enums.options import RenderType, DataFrameFormatType, DeltaInterval
 
@@ -14,8 +14,7 @@ class Options(BaseModel):
     concat_dimensions: bool = False
     fixed_total: bool = False
 
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)
 
     @classmethod
     def default(cls):
@@ -25,8 +24,7 @@ class Options(BaseModel):
 class RenderOptions(BaseModel):
     dtype: RenderType
 
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)
 
     @classmethod
     def default(cls):

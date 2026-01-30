@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic.v1 import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class PyTestSettings(BaseSettings):
@@ -10,16 +10,17 @@ class PyTestSettings(BaseSettings):
     password: Optional[str]
     access_token: Optional[str]
 
-    class Config:
-        env_prefix = "BES_PYTEST_"
-        env_file = ".pytest_env"
-        env_file_encoding = "utf-8"
+    model_config = SettingsConfigDict(
+        env_prefix="BES_PYTEST_",
+        env_file=".pytest_env",
+        env_file_encoding="utf-8",
+    )
 
     def to_oauth2config(self) -> dict:
-        return self.dict(include={"client_id", "client_secret"})
+        return self.model_dump(include={"client_id", "client_secret"})
 
     def to_oauth2_auth_basic(self) -> dict:
-        return self.dict(include={"username", "password"})
+        return self.model_dump(include={"username", "password"})
 
 
 settings = PyTestSettings()
