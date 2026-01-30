@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -47,11 +47,37 @@ class Settings(BaseSettings):
     oauth2: OAuth2Settings = Field(default_factory=OAuth2Settings.default)
     api: ApiSettings = Field(default_factory=ApiSettings.default)
 
+    # Deprecated legacy env vars (pre-nested settings):
+    # - BES_HOST -> api.host
+    # - BES_OAUTH_HOST -> oauth2.host
+    host: Optional[HttpUrl] = Field(default=None, exclude=True)
+    oauth_host: Optional[HttpUrl] = Field(default=None, exclude=True)
+
     model_config = SettingsConfigDict(
         env_prefix="bes_",
         env_file=".env",
         env_file_encoding="utf-8",
+        env_nested_delimiter="__",
+        # Other projects may have extra BES_* vars in env/.env;
+        # Pydantic v2 settings are stricter by default, so ignore unknown keys.
+        extra="ignore",
     )
+
+    @model_validator(mode="after")
+    def _apply_legacy_hosts(self):
+        """Backward-compat for legacy env vars.
+
+        If both legacy and nested values are provided, nested wins.
+        """
+        updates = {}
+
+        if self.host is not None and "host" not in self.api.model_fields_set:
+            updates["api"] = self.api.model_copy(update={"host": self.host})
+
+        if self.oauth_host is not None and "host" not in self.oauth2.model_fields_set:
+            updates["oauth2"] = self.oauth2.model_copy(update={"host": self.oauth_host})
+
+        return self.model_copy(update=updates) if updates else self
 
 
 bes_settings: Settings = Settings()
