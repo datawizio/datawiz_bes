@@ -35,19 +35,19 @@ class RenderOptions(BaseModel):
 
 class TableRenderOptions(RenderOptions):
     dtype: RenderType = RenderType.table
-    additional_data: Optional[dict]
-    additional_column_options: Optional[dict]
-    replace_data: Optional[dict]
-    clone_data: Optional[dict]
-    key_start: Optional[str]
+    additional_data: Optional[dict] = None
+    additional_column_options: Optional[dict] = None
+    replace_data: Optional[dict] = None
+    clone_data: Optional[dict] = None
+    key_start: Optional[str] = None
 
 
 class ChartRenderOptions(RenderOptions):
     dtype: RenderType = RenderType.chart
-    additional_data: Optional[dict]
-    replace_data: Optional[dict]
-    clone_data: Optional[dict]
-    key_start: Optional[str]
+    additional_data: Optional[dict] = None
+    replace_data: Optional[dict] = None
+    clone_data: Optional[dict] = None
+    key_start: Optional[str] = None
 
 
 class DataFrameRenderOptions(RenderOptions):

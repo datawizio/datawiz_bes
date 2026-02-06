@@ -15,16 +15,16 @@ class MetricFilter(BaseModel):
 
 class MetricFormat(BaseModel):
     dtype: DType = DType.number
-    decimals: Optional[int]
+    decimals: Optional[int] = None
 
     model_config = ConfigDict(use_enum_values=True)
 
 
 class Metric(BaseModel):
     metric: str
-    title: Optional[str]
-    dformat: Optional[MetricFormat]
-    filters: Optional[List[MetricFilter]]
+    title: Optional[str] = None
+    dformat: Optional[MetricFormat] = None
+    filters: Optional[List[MetricFilter]] = None
 
 
 class Aggregate(ListGenericModel[Metric]):

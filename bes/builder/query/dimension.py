@@ -9,15 +9,15 @@ from ...utils.generics import ListGenericModel
 
 
 class Lookups(BaseModel):
-    include: Optional[List[Union[int, str, date]]] = Field(min_length=1)
-    exclude: Optional[List[Union[int, str, date]]] = Field(min_length=1)
-    between: Optional[List[Union[int, str, date]]] = Field(min_length=2, max_length=2)
-    equal: Optional[List[Union[int, str, date]]]
-    not_equal: Optional[List[Union[int, str, date]]]
-    gte: Optional[Union[int, str]]
-    gt: Optional[Union[int, str]]
-    lte: Optional[Union[int, str]]
-    lt: Optional[Union[int, str]]
+    include: Optional[List[Union[int, str, date]]] = Field(default=None, min_length=1)
+    exclude: Optional[List[Union[int, str, date]]] = Field(default=None, min_length=1)
+    between: Optional[List[Union[int, str, date]]] = Field(default=None, min_length=2, max_length=2)
+    equal: Optional[List[Union[int, str, date]]] = None
+    not_equal: Optional[List[Union[int, str, date]]] = None
+    gte: Optional[Union[int, str]] = None
+    gt: Optional[Union[int, str]] = None
+    lte: Optional[Union[int, str]] = None
+    lt: Optional[Union[int, str]] = None
     negate: bool = False
 
     @classmethod
@@ -37,7 +37,7 @@ class Dimension(BaseModel):
     dimension: str
     lookups: Lookups = Field(default_factory=Lookups.default)
     display_fields: List[str] = ["name"]
-    force_reindex: Optional[bool]
+    force_reindex: Optional[bool] = None
     on: On = On.row
     by: By = By.id
     tree_options: TreeDimensionOptions = Field(default_factory=TreeDimensionOptions.default)

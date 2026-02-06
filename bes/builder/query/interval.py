@@ -8,8 +8,8 @@ from .enums.interval import Selected, PrevSelected
 
 class DateRange(BaseModel):
     selected: Selected = Selected.last_update_date
-    date_from: Optional[date]
-    date_to: Optional[date]
+    date_from: Optional[date] = None
+    date_to: Optional[date] = None
 
     model_config = ConfigDict(use_enum_values=True)
 
