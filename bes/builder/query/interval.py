@@ -1,42 +1,41 @@
 from datetime import date, time
-from typing import Optional, Dict
+from typing import Optional
 
-from pydantic.v1 import BaseModel, root_validator
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from .enums.interval import Selected, PrevSelected
 
 
 class DateRange(BaseModel):
     selected: Selected = Selected.last_update_date
-    date_from: Optional[date]
-    date_to: Optional[date]
+    date_from: Optional[date] = None
+    date_to: Optional[date] = None
 
-    @root_validator()
-    def date_range_require(cls, values: Dict) -> Dict:
-        if values.get("selected") == Selected.date:
+    model_config = ConfigDict(use_enum_values=True)
+
+    @model_validator(mode="after")
+    def date_range_require(self):
+        if self.selected == Selected.date:
             assert (
-                values.get("date_from") is not None and values.get("date_to") is not None
+                self.date_from is not None and self.date_to is not None
             ), f"date_from, date_to is required for '{Selected.date}'"
-        return values
+        return self
 
     @classmethod
     def default(cls):
         return cls()
 
-    class Config:
-        use_enum_values = True
-
 
 class PrevDateRange(DateRange):
     selected: PrevSelected = PrevSelected.previous
 
-    @root_validator()
-    def date_range_require(cls, values: Dict) -> Dict:
-        if values.get("selected") == PrevSelected.prev_date:
+    @model_validator(mode="after")
+    def prev_date_range_require(self):
+        if self.selected == PrevSelected.prev_date:
             assert (
-                values.get("date_from") is not None and values.get("date_to") is not None
+                self.date_from is not None and self.date_to is not None
             ), f"date_from, date_to is required for '{PrevSelected.prev_date}'"
-        return values
+        return self
 
 
 class TimeRange(BaseModel):

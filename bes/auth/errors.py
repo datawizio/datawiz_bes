@@ -1,16 +1,46 @@
-from pydantic.v1.errors import PydanticErrorMixin
+class BESError(Exception):
+    code = "bes.error"
+    msg_template = "BES error"
+
+    def __init__(self, **ctx):
+        super().__init__()
+        self.ctx = ctx
+
+    def __str__(self) -> str:
+        try:
+            return self.msg_template.format(**self.ctx)
+        except Exception:
+            return self.msg_template
 
 
-class BESError(PydanticErrorMixin, Exception):
-    pass
+class BESTypeError(TypeError):
+    code = "bes.type_error"
+    msg_template = "BES type error"
+
+    def __init__(self, **ctx):
+        super().__init__()
+        self.ctx = ctx
+
+    def __str__(self) -> str:
+        try:
+            return self.msg_template.format(**self.ctx)
+        except Exception:
+            return self.msg_template
 
 
-class BESTypeError(PydanticErrorMixin, TypeError):
-    pass
+class BESValueError(ValueError):
+    code = "bes.value_error"
+    msg_template = "BES value error"
 
+    def __init__(self, **ctx):
+        super().__init__()
+        self.ctx = ctx
 
-class BESValueError(PydanticErrorMixin, ValueError):
-    pass
+    def __str__(self) -> str:
+        try:
+            return self.msg_template.format(**self.ctx)
+        except Exception:
+            return self.msg_template
 
 
 class BESBadRequestError(BESError):

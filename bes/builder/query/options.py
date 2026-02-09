@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from .enums.options import RenderType, DataFrameFormatType, DeltaInterval
 
@@ -14,8 +14,7 @@ class Options(BaseModel):
     concat_dimensions: bool = False
     fixed_total: bool = False
 
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)
 
     @classmethod
     def default(cls):
@@ -25,8 +24,7 @@ class Options(BaseModel):
 class RenderOptions(BaseModel):
     dtype: RenderType
 
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)
 
     @classmethod
     def default(cls):
@@ -37,19 +35,19 @@ class RenderOptions(BaseModel):
 
 class TableRenderOptions(RenderOptions):
     dtype: RenderType = RenderType.table
-    additional_data: Optional[dict]
-    additional_column_options: Optional[dict]
-    replace_data: Optional[dict]
-    clone_data: Optional[dict]
-    key_start: Optional[str]
+    additional_data: Optional[dict] = None
+    additional_column_options: Optional[dict] = None
+    replace_data: Optional[dict] = None
+    clone_data: Optional[dict] = None
+    key_start: Optional[str] = None
 
 
 class ChartRenderOptions(RenderOptions):
     dtype: RenderType = RenderType.chart
-    additional_data: Optional[dict]
-    replace_data: Optional[dict]
-    clone_data: Optional[dict]
-    key_start: Optional[str]
+    additional_data: Optional[dict] = None
+    replace_data: Optional[dict] = None
+    clone_data: Optional[dict] = None
+    key_start: Optional[str] = None
 
 
 class DataFrameRenderOptions(RenderOptions):

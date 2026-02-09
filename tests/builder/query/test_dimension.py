@@ -28,6 +28,6 @@ class TestDimension(unittest.TestCase):
         lookups = Lookups(include=[date(2020, 1, 1), date(2020, 1, 2)])
 
         self.assertEqual(
-            lookups.json(include={"include"}),
+            lookups.model_dump_json(include={"include"}),
             '{"include": ["2020-01-01", "2020-01-02"]}'
         )

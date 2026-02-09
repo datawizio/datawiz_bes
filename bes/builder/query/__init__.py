@@ -1,6 +1,6 @@
 from typing import Union
 
-from pydantic.v1 import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from .dimension import Dimension, GroupBy, Filters, Lookups, Query
 from .interval import DateRange, PrevDateRange, TimeRange
@@ -53,10 +53,9 @@ class BuilderQuery(BaseModel):
         DataFrameRenderOptions
     ] = Field(default_factory=TableRenderOptions.default)
 
-    class Config:
-        validate_assignment = True
+    model_config = ConfigDict(validate_assignment=True)
 
     def to_json(self, **kwargs) -> "str":
         """Use for request data in BESBuilder with data of type `json`"""
         kwargs.setdefault("exclude_none", True)
-        return self.json(**kwargs)
+        return self.model_dump_json(**kwargs)
