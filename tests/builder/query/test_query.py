@@ -12,6 +12,5 @@ class TestBuilderQuery(unittest.TestCase):
         self.builder_query.to_json()
 
     def test_model_dump_and_dump_json_no_errors(self):
-        # Pydantic v2 compatibility smoke test: defaults + serialization
         BuilderQuery().model_dump()
         BuilderQuery().model_dump_json()
