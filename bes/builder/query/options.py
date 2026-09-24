@@ -53,3 +53,4 @@ class ChartRenderOptions(RenderOptions):
 class DataFrameRenderOptions(RenderOptions):
     dtype: RenderType = RenderType.data_frame
     format_type: DataFrameFormatType = DataFrameFormatType.split
+    fillna: bool = True
